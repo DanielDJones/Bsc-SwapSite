@@ -69,10 +69,10 @@
   <div class="col s12 m3">
     <div class="card green darken-3">
       <div class="card-content white-text center">
-        <span class="card-title">$20 | 2400</span>
+        <span class="card-title"> £20 | 2400</span>
         <p>2000 +20% free</p>
         <p>-----</p>
-        <a href="#" class="btn-large waves-effect waves-light black-text yellow">Buy</a>
+        <a href="#" class="btn-large waves-effect waves-light black-text yellow ">Buy</a>
       </div>
     </div>
   </div>
