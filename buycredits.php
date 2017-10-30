@@ -4,6 +4,9 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <title>Buy Credits</title>
+
 </head>
 <body>
 
@@ -66,7 +69,7 @@
   <div class="col s12 m3">
     <div class="card green darken-3">
       <div class="card-content white-text center">
-        <span class="card-title"> £20 | 2400</span>
+        <span class="card-title">$20 | 2400</span>
         <p>2000 +20% free</p>
         <p>-----</p>
         <a href="#" class="btn-large waves-effect waves-light black-text yellow">Buy</a>
