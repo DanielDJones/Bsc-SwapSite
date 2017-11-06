@@ -12,31 +12,31 @@ $error = false;
 
 if (isset($_POST['signup'])){
   $name = mysqli_real_escape_string($con, $_POST['name']);
-  $username = mysqli_real_escape_string($con, $_POST['username'])
-  $username = mysqli_real_escape_string($con, $_POST['email']);;
+  $username = mysqli_real_escape_string($con, $_POST['username']);
+  $email = mysqli_real_escape_string($con, $_POST['email']);
   $password = mysqli_real_escape_string($con, $_POST['password']);
   $cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
 
   //Name validation only letters and spaces
   if(!preg_match("/^[a-zA-Z]+$/",$name)){
       $error = true;
-      echo "<script>alert('Error','Name must only contain letters and spaces')</script>"
+      echo "<script>alert('Error: Name must only contain letters and spaces')</script>";
   }
   if(!preg_match("/^[a-zA-Z]+$/",$username)){
       $error = true;
-      echo "<script>alert('Error','Username must only contain letters and spaces')</script>"
+      echo "<script>alert('Error: Username must only contain letters and spaces')</script>";
   }
   if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
       $error = true;
-      echo "<script>alert('Error','Not a valid email address')</script>"
+      echo "<script>alert('Error: Not a valid email address')</script>";
   }
   if(strlen($password) < 6){
       $error = true;
-      echo "<script>alert('Error','Passwrods must be at least 6 characters long')</script>"
+      echo "<script>alert('Error: Passwrods must be at least 6 characters long')</script>";
   }
   if($password != $cpassword){
       $error = true;
-      echo "<script>alert('Error','Passwords dont match')</script>"
+      echo "<script>alert('Error: Passwords dont match')</script>";
   }
 
   if(!$error){
@@ -71,8 +71,8 @@ if (isset($_POST['signup'])){
 
  <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="signupform" class="col s12">
    <div class="row">
-     <span><?php if (isset($successmsg)) {echo $successmsg} ?><span>
-      <span><?php if (isset($errormsg)) {echo $errormsg} ?><span>
+     <span><?php if (isset($successmsg)) {echo $successmsg;} ?><span>
+      <span><?php if (isset($errormsg)) {echo $errormsg;} ?><span>
      <div class="input-field col s6">
        <input id="name" type="text" class="validate">
        <label for="name">Name</label>
@@ -102,7 +102,7 @@ if (isset($_POST['signup'])){
      </div>
    </div>
    <div class="row center">
-     <a href="login.php" class="btn-large waves-effect waves-light black-text yellow">Submit</a>
+     <input type="submit" name="signup" value="Submit" class="btn-large waves-effect waves-light black-text yellow"/>
    </div>
  </form>
 </div>
