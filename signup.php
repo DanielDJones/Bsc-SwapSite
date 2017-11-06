@@ -20,23 +20,23 @@ if (isset($_POST['signup'])){
   //Name validation only letters and spaces
   if(!preg_match("/^[a-zA-Z]+$/",$name)){
       $error = true;
-      $name_error = "Name must only contain letters and spaces";
+      echo "<script>alert('Error','Name must only contain letters and spaces')</script>"
   }
   if(!preg_match("/^[a-zA-Z]+$/",$username)){
       $error = true;
-      $username_error = "Username must only contain letters and spaces";
+      echo "<script>alert('Error','Username must only contain letters and spaces')</script>"
   }
   if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
       $error = true;
-      $email_error = "Please enter a valid email address";
+      echo "<script>alert('Error','Not a valid email address')</script>"
   }
   if(strlen($password) < 6){
       $error = true;
-      $password_error = "Password must be at least 6 characters long"
+      echo "<script>alert('Error','Passwrods must be at least 6 characters long')</script>"
   }
   if($password != $cpassword){
       $error = true;
-      $cpassword_error = "Passwords do not match"
+      echo "<script>alert('Error','Passwords dont match')</script>"
   }
 
   if(!$error){
@@ -69,15 +69,17 @@ if (isset($_POST['signup'])){
               <div class="card-content white-text">
                 <div class="row">
 
- <form class="col s12">
+ <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="signupform" class="col s12">
    <div class="row">
+     <span><?php if (isset($successmsg)) {echo $successmsg} ?><span>
+      <span><?php if (isset($errormsg)) {echo $errormsg} ?><span>
      <div class="input-field col s6">
-       <input id="first_name" type="text" class="validate">
-       <label for="first_name">Name</label>
+       <input id="name" type="text" class="validate">
+       <label for="name">Name</label>
      </div>
      <div class="input-field col s6">
-       <input id="last_name" type="text" class="validate">
-       <label for="last_name">Username</label>
+       <input id="username" type="text" class="validate">
+       <label for="username">Username</label>
      </div>
    </div>
 
@@ -89,8 +91,8 @@ if (isset($_POST['signup'])){
    </div>
    <div class="row">
      <div class="input-field col s12">
-       <input id="password" type="password" class="validate">
-       <label for="password">Confirm Password</label>
+       <input id="cpassword" type="password" class="validate">
+       <label for="cpassword">Confirm Password</label>
      </div>
    </div>
    <div class="row">
