@@ -1,3 +1,14 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    if (isset($_POST['login'])) {
+
+        require 'loginBackend.php';
+
+    }
+}
+?>
+
 <!DOCTYPE html>
   <html>
     <head>
@@ -11,26 +22,28 @@
 
     <body>
       <div class="container">
+         <form role="form" action="login.php" method="post" class="col s12">
         <div class="row">
           <div class="col s12">
             <div class="card green darken-1">
               <div class="card-content white-text">
                 <span class="card-title">Login</span>
                   <div class="input-field white-text">
-                    <input id="first_name" type="text" class="validate">
-                    <label for="first_name">Username</label>
+                    <input id="email" type="text" class="validate" name="email">
+                    <label for="email">email</label>
                   </div>
                   <div class="input-field">
-                    <input id="last_name" type="password" class="validate">
-                    <label for="last_name">Password</label>
+                    <input id="password" type="password" class="validate" name="password">
+                    <label for="password">Password</label>
                   </div>
                   <div class="row center">
-                    <a href="login.php" class="btn-large waves-effect waves-light black-text yellow">Login</a>
+                    <button type="submit" class="btn-large waves-effect waves-light black-text yellow" name="login"/>Login</button>
                   </div>
               </div>
             </div>
           </div>
         </div>
+      </form>
       </div>
 
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

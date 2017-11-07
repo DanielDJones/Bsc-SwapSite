@@ -1,7 +1,4 @@
 <?php
-/* Registration process, inserts user info into the database
-   and sends account confirmation email message
- */
 
 // Set session variables
 $_SESSION['email'] = $_POST['email'];
@@ -18,7 +15,6 @@ $password = $mysqli->escape_string($_POST['password']);
 // Check if user with that email already exists
 $result = $mysqli->query("SELECT * FROM Account WHERE EMAIL='$email'") or die($mysqli->error());
 
-// We know user email exists if the rows returned are more than 0
 if ( $result->num_rows > 0 ) {
 
     $_SESSION['message'] = 'User with this email already exists!';
@@ -28,13 +24,12 @@ if ( $result->num_rows > 0 ) {
 else {
 
 
+    $password = md5($password);
+    $sql = "INSERT INTO Account (ACCOUNTNAME, USERNAME, EMAIL, PASSWORD) VALUES ('$name','$username','$email','$password')";
 
-    $sql = "INSERT INTO Account (ACCOUNTNAME, USERNAME, EMAIL, PASSWORD) VALUES ('$name','$username','$email','md5($password)')";
-
-    // Add user to the database
     if ( $mysqli->query($sql) ){
 
-        $_SESSION['logged_in'] = true; // So we know the user has logged in
+        $_SESSION['logged_in'] = true;
 
         header("location: profile.php");
     }
