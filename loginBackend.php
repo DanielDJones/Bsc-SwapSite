@@ -1,5 +1,4 @@
 <?php
-
 $email = $mysqli->escape_string($_POST['email']);
 $result = $mysqli->query("SELECT * FROM Account WHERE email='$email'");
 
@@ -9,8 +8,9 @@ if ( $result->num_rows == 0 ){
 }
 else {
     $user = $result->fetch_assoc();
-
-    if ( password_verify($_POST['password'], $user['password']) ) {
+    $password = $mysqli->escape_string($_POST['password']);
+    $password = md5($password);
+    if ( $password == $user['PASSWORD']) {
 
         //Store data from db into session
         $_SESSION['email'] = $user['EMAIL'];

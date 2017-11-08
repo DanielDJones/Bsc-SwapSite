@@ -1,4 +1,6 @@
 <?php
+session_start();
+require 'dbconnect.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     if (isset($_POST['login'])) {
@@ -22,28 +24,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     <body>
       <div class="container">
-         <form role="form" action="login.php" method="post" class="col s12">
         <div class="row">
           <div class="col s12">
             <div class="card green darken-1">
               <div class="card-content white-text">
-                <span class="card-title">Login</span>
-                  <div class="input-field white-text">
-                    <input id="email" type="text" class="validate" name="email">
-                    <label for="email">email</label>
-                  </div>
-                  <div class="input-field">
-                    <input id="password" type="password" class="validate" name="password">
-                    <label for="password">Password</label>
-                  </div>
-                  <div class="row center">
-                    <button type="submit" class="btn-large waves-effect waves-light black-text yellow" name="login"/>Login</button>
-                  </div>
+                <div class="row">
+
+ <form role="form" action="login.php" method="post" class="col s12">
+
+   <!--<div class="row">
+     <div class="input-field col s12">
+       <input id="cpassword" type="password" class="validate" name="cpassword">
+       <label for="cpassword">Confirm Password</label>
+     </div>
+   </div>-->
+   <div class="row">
+     <div class="input-field col s12">
+       <input id="email" type="email" class="validate" name="email">
+       <label for="email">Email</label>
+     </div>
+   </div>
+   <div class="row">
+     <div class="input-field col s12">
+       <input id="password" type="password" class="validate" name="password">
+       <label for="password">Password</label>
+     </div>
+   </div>
+   <div class="row center">
+      <button type="submit" class="btn-large waves-effect waves-light black-text yellow" name="login" />Login</button>
+   </div>
+ </form>
+</div>
               </div>
             </div>
           </div>
         </div>
-      </form>
       </div>
 
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
