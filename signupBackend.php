@@ -10,6 +10,12 @@ $username = $mysqli->escape_string($_POST['username']);
 $email = $mysqli->escape_string($_POST['email']);
 $password = $mysqli->escape_string($_POST['password']);
 
+if ( $name == NULL or $username == NULL or $email == NULL or $password == NULL) {
+
+    $_SESSION['message'] = 'Some required fields are blank!';
+    header("location: error.php");
+
+}
 
 
 // Check if user with that email already exists
