@@ -61,7 +61,7 @@ $aboutMe = $user['BIO'];
               <div class="col s12">
                 <div class="card yellow darken-2">
                   <div class="card-content white-text">
-                    <span class="card-title"><?= $username ?></span>
+                    <span class="card-title"><?= $username ?> <button type="submit" class="btn-large waves-effect waves-light white-text green darken-3" name="register" />Edit Profile</button></span>
                   </div>
                 </div>
               </div>
