@@ -1,3 +1,20 @@
+<?php
+
+require 'dbconnect.php';
+session_start();
+if ( $_SESSION['logged_in'] != 1 ) {
+  $_SESSION['message'] = "You must log in before viewing your profile page!";
+  header("location: error.php");
+}
+
+$accountId = $_SESSION['accountID'];
+$username = $_SESSION['username'];
+$result = $mysqli->query("SELECT * FROM Account WHERE ACCOUNTID= $accountId");
+$user = $result->fetch_assoc();
+$aboutMe = $user['BIO'];
+
+?>
+
 <!DOCTYPE html>
   <html>
     <head>
@@ -44,7 +61,7 @@
               <div class="col s12">
                 <div class="card yellow darken-2">
                   <div class="card-content white-text">
-                    <span class="card-title">Username Name</span>
+                    <span class="card-title"><?= $username ?></span>
                   </div>
                 </div>
               </div>
@@ -64,7 +81,7 @@
             <div class="card yellow darken-2">
               <div class="card-content white-text">
                 <span class="card-title">About Me</span>
-                <p>Lorem ipsum dolor sit amet, volumus corpora mel ei, choro viderer aliquid usu ea. Pro appareat perpetua an, nobis quando tractatos ad est. Te saepe iudico vix. Nec paulo euismod in, duo at dicunt salutatus, hinc lorem nostrum duo et. Ut lorem nostrud sententiae ius, et animal feugait eum, populo iuvaret per et.</p>
+                <p><?= $aboutMe ?></p>
               </div>
             </div>
           </div>

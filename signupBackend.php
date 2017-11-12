@@ -30,9 +30,7 @@ else {
 
     if ( $mysqli->query($sql) ){
 
-        $_SESSION['logged_in'] = true;
-
-        header("location: profile.php");
+        header("location: login.php");
     }
 
     else {

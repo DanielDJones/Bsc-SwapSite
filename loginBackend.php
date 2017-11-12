@@ -13,6 +13,7 @@ else {
     if ( $password == $user['PASSWORD']) {
 
         //Store data from db into session
+        $_SESSION['accountID'] = $user['ACCOUNTID'];
         $_SESSION['email'] = $user['EMAIL'];
         $_SESSION['name'] = $user['ACCOUNTNAME'];
         $_SESSION['username'] = $user['USERNAME'];
