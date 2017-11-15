@@ -6,14 +6,45 @@ if ( $_SESSION['logged_in'] != 1 ) {
   header("location: error.php");
 }
 
+
+
 $listingID = $mysqli->escape_string($_GET['id']);
 
 $result = $mysqli->query("SELECT * FROM LISTING WHERE LISTINGID= $listingID");
 $listing = $result->fetch_assoc();
 $postAccountID = $listing['ACCOUNTID'];
-echo "<script>alert('$postAccountID')</script>";
 $result2 = $mysqli->query("SELECT * FROM Account WHERE ACCOUNTID= $postAccountID");
 $postAccount = $result2->fetch_assoc();
+
+$custID = $_SESSION['accountID'];
+
+$result = $mysqli->query("SELECT * FROM OFFER WHERE CUSTID= $custID AND LISTINGID = $listingID") or die($mysqli->error());
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    if (isset($_POST['submit'])) {
+
+        require 'makeOffer.php';
+
+    }
+}
+
+if ( $result->num_rows == 0 ) {
+  //ADD Make offer field
+  $offerSet = 0;
+}
+else {
+  //Show Set offer
+  $offerSet = 1;
+  $result3 = $mysqli->query("SELECT * FROM OFFER WHERE CUSTID= $postAccountID");
+  $offer = $result3->fetch_assoc();
+  $offerDesc = $offer['OFFERDESC'];
+  $offerCurr = $offer['CURRENCYOFFERD'];
+}
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -96,7 +127,7 @@ $postAccount = $result2->fetch_assoc();
       </div>
     </div>
   </div>
-  <div class="col s12 m8 l10">
+  <div class="col s12 m12 l12">
     <div class="card yellow darken-2">
       <div class="card-content white-text">
         <span class="card-title">Looking for</span>
@@ -112,30 +143,47 @@ $postAccount = $result2->fetch_assoc();
   <div class="col s12">
     <div class="card yellow darken-2">
       <div class="card-content white-text">
-        <span class="card-title">Make a offer</span>
+        <?php if($offerSet == 0){echo "<span class='card-title'>Make a offer</span>";}else{echo "<span class='card-title'>Your offer</span>";}?>
       </div>
     </div>
   </div>
 </div>
-
-<div class="row">
-  <div class="col s12">
-    <div class="card green darken-3">
-      <div class="card-content white-text">
-        <span class="card-title">Offer</span>
-        <div class="row">
-          <div class="input-field col s12">
-          <textarea id="Offer" class="materialize-textarea"></textarea>
-          <label for="Offer">Offer</label>
+<?php if($offerSet == 0){ ?>
+  <div class="card green white-text darken-3">
+    <form role="form" action="listing.php?id=<?=$listingID?>" method="post" class="col s12">
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="offerB" type="text" class="validate" name="offerB">
+        <label for="offerB">Offer</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="creditsOfferd" type="text" class="validate" name="creditsOfferd">
+        <label for="creditsOfferd">Credits Offerd</label>
+      </div>
+    </div>
+    <div class="row center">
+       <button type="submit" class="btn-large waves-effect waves-light black-text yellow" name="submit" />Submit Offer</button>
+    </div>
+  </form>
+  </div>
+<?php } else {?>
+  <div class="row">
+    <div class="col s12">
+      <div class="card green darken-3">
+        <div class="card-content white-text">
+          <span class="card-title">Offer</span>
+          <div class="row">
+            <p><?= $offerDesc ?></p>
+            <p>Credits Offerd: <?= $offerCurr ?></p>
           </div>
         </div>
-        <div class="row center">
-          <a href="#" class="btn-large waves-effect waves-light black-text yellow">Submit offer</a>
-        </div>
       </div>
     </div>
   </div>
-</div>
+<?php } ?>
+
 
 <footer class="page-footer green darken-2">
   <div class="footer-copyright">

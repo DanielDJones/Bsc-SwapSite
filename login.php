@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
           <div class="col s12">
             <div class="card green darken-1">
               <div class="card-content white-text">
-                <div class="row">
+<div class="row">
 
  <form role="form" action="login.php" method="post" class="col s12">
 
