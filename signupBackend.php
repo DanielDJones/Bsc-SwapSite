@@ -28,9 +28,26 @@ else {
     $password = md5($password);
     $sql = "INSERT INTO Account (ACCOUNTNAME, USERNAME, EMAIL, PASSWORD) VALUES ('$name','$username','$email','$password')";
 
+
+
+
     if ( $mysqli->query($sql) ){
 
-        header("location: login.php");
+
+        // Setup Cust Table
+        $result = $mysqli->query("SELECT * FROM Account WHERE email='$email'");
+        $user = $result->fetch_assoc();
+        $accountId = $user['ACCOUNTID'];
+
+        $sql = "INSERT INTO Cust (ACCOUNTID) VALUES ($accountId)";
+          if ( $mysqli->query($sql) ){
+            header("location: login.php");
+          }
+
+          else {
+            $_SESSION['message'] = 'Registration failed!';
+            header("location: error.php");
+          }
     }
 
     else {
