@@ -1,3 +1,20 @@
+<?php
+require 'dbconnect.php';
+session_start();
+if ( $_SESSION['logged_in'] != 1 ) {
+  $_SESSION['message'] = "You must log in before viewing your profile page!";
+  header("location: error.php");
+}
+
+$listingID = $mysqli->escape_string($_GET['id']);
+
+$result = $mysqli->query("SELECT * FROM LISTING WHERE LISTINGID= $listingID");
+$listing = $result->fetch_assoc();
+$postAccountID = $listing['ACCOUNTID'];
+echo "<script>alert('$postAccountID')</script>";
+$result2 = $mysqli->query("SELECT * FROM Account WHERE ACCOUNTID= $postAccountID");
+$postAccount = $result2->fetch_assoc();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,10 +59,10 @@
       <div class="col s12">
         <div class="card yellow darken-2">
           <div class="card-content white-text">
-            <span class="card-title">Listing Title</span>
+            <span class="card-title"><?= $listing['COMPONENTNAME'] ?></span>
           </div>
           <div class="card-action yellow darken-4">
-            <a href="#">Catagory</a>
+            <a href="viewprofile.php?id=<?=$postAccount['ACCOUNTID'] ?>"><?= $postAccount['USERNAME'] ?></a>
           </div>
         </div>
       </div>
@@ -53,7 +70,7 @@
         <div class="card green darken-3">
           <div class="card-content white-text">
             <span class="card-title">Details</span>
-            <p> Details </p>
+            <p><?= $listing['COMPONENTDESC'] ?></p>
           </div>
 
         </div>
@@ -67,7 +84,15 @@
   <div class="col s12 m4 l2">
     <div class="card yellow darken-2">
       <div class="card-content white-text">
-        <span class="card-title">Area</span>
+        <span class="card-title"><?= $listing['LOCATIONTOWN'] ?></span>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m8 l10">
+    <div class="card yellow darken-2">
+      <div class="card-content white-text">
+        <span class="card-title">Location Details</span>
+        <p><?= $listing['LOCATIONDETAILS'] ?></p>
       </div>
     </div>
   </div>
@@ -75,22 +100,13 @@
     <div class="card yellow darken-2">
       <div class="card-content white-text">
         <span class="card-title">Looking for</span>
-        <p>Lorem ipsum dolor sit amet, volumus corpora mel ei, choro viderer aliquid usu ea. Pro appareat perpetua an, nobis quando tractatos ad est. Te saepe iudico vix. Nec paulo euismod in, duo at dicunt salutatus, hinc lorem nostrum duo et. Ut lorem nostrud sententiae ius, et animal feugait eum, populo iuvaret per et.</p>
+        <p><?= $listing['LOOKINGFOR'] ?></p>
       </div>
     </div>
   </div>
 
 </div>
-<div class="row">
-  <div class="col s12">
-    <div class="card green darken-3">
-      <div class="card-content white-text">
-        <span class="card-title">Description</span>
-        <p>Lorem ipsum dolor sit amet, volumus corpora mel ei, choro viderer aliquid usu ea. Pro appareat perpetua an, nobis quando tractatos ad est. Te saepe iudico vix. Nec paulo euismod in, duo at dicunt salutatus, hinc lorem nostrum duo et. Ut lorem nostrud sententiae ius, et animal feugait eum, populo iuvaret per et.</p>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <div class="row">
   <div class="col s12">
