@@ -6,6 +6,8 @@ $accountId = $_SESSION['accountID'];
 
 $activeListQ = "SELECT * FROM LISTING WHERE LISTINGACTIVE = 1 AND ACCOUNTID = $accountId ORDER BY LISTINGCDATE ";
 $activeListR = mysqli_query($mysqli, $activeListQ);
+$inactiveListQ = "SELECT * FROM LISTING WHERE LISTINGACTIVE = 0 AND ACCOUNTID = $accountId ORDER BY LISTINGCDATE ";
+$inactiveListR = mysqli_query($mysqli, $inactiveListQ);
 
 $getCustID = $mysqli->query("SELECT * FROM Cust WHERE ACCOUNTID='$accountId'");
 $getCUSTID2 = $getCustID->fetch_assoc();
@@ -13,6 +15,8 @@ $custID = $getCUSTID2['CUSTID'];
 
 $activeOfferQ = "SELECT * FROM OFFER, LISTING WHERE LISTINGACTIVE = 1 AND CUSTID = $custID ORDER BY LISTINGCDATE ";
 $activeOfferR = mysqli_query($mysqli, $activeOfferQ);
+$inactiveOfferQ = "SELECT * FROM OFFER, LISTING WHERE LISTINGACTIVE = 0 AND CUSTID = $custID ORDER BY LISTINGCDATE ";
+$inactiveOfferR = mysqli_query($mysqli, $inactiveOfferQ);
 
  ?>
 
@@ -72,7 +76,7 @@ while(TRUE){
       <div class="card-image">
         <img src="http://via.placeholder.com/400x400">
       </div>
-      <div class="card-stacked">Offer
+      <div class="card-stacked">
         <div class="card-content">
           <span class="card-title"><?=$listingTitle ?></span>
           <p><?=$listingDesc ?></p>
@@ -139,24 +143,21 @@ while(TRUE){
   </div>
 </div>
 
-<div class="row">
-  <div class="col s12">
-    <div class="card green darken-3 white-text horizontal">
-      <div class="card-image">
-        <img src="http://via.placeholder.com/400x400">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <span class="card-title">Listing Title</span>
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">View listing</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<?php
+while(TRUE){
+
+  $row = mysqli_fetch_array($inactiveListR, MYSQLI_ASSOC);
+  if($row == NULL)
+  {
+    $listingsLeft = 0;
+    break;
+  }
+  $listingTitle = $row['COMPONENTNAME'];
+  $listingDesc = $row['COMPONENTDESC'];
+  $listingTime = $row['LISTINGCDATE'];
+  $listingDesc = substr($listingDesc, 0, 100)."...";
+  $listingID = $row['LISTINGID'];
+ ?>
 
 <div class="row">
   <div class="col s12">
@@ -164,41 +165,62 @@ while(TRUE){
       <div class="card-image">
         <img src="http://via.placeholder.com/400x400">
       </div>
-      <div class="card-stacked">
+      <div class="card-stacked">Offer
         <div class="card-content">
-          <span class="card-title">Listing Title</span>
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
+          <span class="card-title"><?=$listingTitle ?></span>
+          <p><?=$listingDesc ?></p>
         </div>
         <div class="card-action">
-          <a href="#">View listing</a>
+          <a href="listing.php?id=<?=$listingID?>">View listing: <?=$listingTime ?></a>
         </div>
       </div>
     </div>
   </div>
 </div>
+<?php } ?>
 
 <div class="row">
   <div class="col s12">
-    <div class="card green darken-3 white-text horizontal">
-      <div class="card-image">
-        <img src="http://via.placeholder.com/400x400">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <span class="card-title">Listing Title</span>
-          <p>I am a very simple card. I am good at containing small bits of information.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">View listing</a>
-        </div>
+    <div class="card yellow darken-2">
+      <div class="card-content white-text">
+        <span class="card-title">Accepted Offer History</span>
       </div>
     </div>
   </div>
 </div>
 
+<?php
+while(TRUE){
 
+  $row = mysqli_fetch_array($activeOfferR, MYSQLI_ASSOC);
+  if($row == NULL)
+  {
+    $listingsLeft = 0;
+    break;
+  }
+  $offerDesc = $row['OFFERDESC'];
+  $creditsOfferd = $row['CURRENCYOFFERD'];
+  $listingID = $row['LISTINGID'];
 
+ ?>
 
+<div class="row">
+  <div class="col s12">
+    <div class="card yellow darken-3 white-text horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title">Offer</span>
+          <p><?=$offerDesc ?></p>
+          <p>Credits Offerd: <?=$creditsOfferd ?></p>
+        </div>
+        <div class="card-action">
+          <a href="listing.php?id=<?=$listingID?>">View listing: <?=$listingTime ?></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php } ?>
 
 <footer class="page-footer green darken-2">
   <div class="footer-copyright">
