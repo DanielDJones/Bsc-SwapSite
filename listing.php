@@ -40,6 +40,13 @@ else {
   $offer = $result3->fetch_assoc();
   $offerDesc = $offer['OFFERDESC'];
   $offerCurr = $offer['CURRENCYOFFERD'];
+  $offerID = $offer['OFFERID']
+  if ($offer['OFFERACCEPTED'] == 1) {
+    $offerAccepted = "Offer Accepted <button href='confirmswap.php?id=$offerID' class='btn-large waves-effect waves-light white-text green darken-3'/>Confirm Swap</button></span>";
+  }
+  else {
+    $offerAccepted = 0;
+  }
 }
 
 
@@ -176,7 +183,7 @@ else {
           <span class="card-title">Offer</span>
           <div class="row">
             <p><?= $offerDesc ?></p>
-            <p>Credits Offerd: <?= $offerCurr ?></p>
+            <p>Credits Offerd: <?= $offerCurr ?> <?php if ($offerAccepted != 0){$offerAccepted} ?></p>
           </div>
         </div>
       </div>
