@@ -7,7 +7,6 @@ if ( $_SESSION['logged_in'] != 1 ) {
 }
 
 
-
 $listingID = $mysqli->escape_string($_GET['id']);
 
 $result = $mysqli->query("SELECT * FROM LISTING WHERE LISTINGID= $listingID");
@@ -18,7 +17,34 @@ $postAccount = $result2->fetch_assoc();
 
 $custID = $_SESSION['accountID'];
 
-$result = $mysqli->query("SELECT * FROM OFFER WHERE CUSTID= $custID AND LISTINGID = $listingID") or die($mysqli->error());
+//Get the True Cust ID
+$getTCustID = $mysqli->query("SELECT * FROM Cust WHERE ACCOUNTID='$custID'");
+$getTCUSTID2 = $getTCustID->fetch_assoc();
+$tCustID = $getTCUSTID2['CUSTID'];
+
+$listingOffersQ = "SELECT * FROM OFFER WHERE CUSTID= $tCustID AND LISTINGID = $listingID";
+$result = mysqli_query($mysqli, $listingOffersQ);
+
+
+if ( $result->num_rows == 0 ) {
+  //ADD Make offer field
+  $offerSet = 0;
+}
+else {
+  //Show Set offer
+  $offerSet = 1;
+  $result3 = $mysqli->query("SELECT * FROM OFFER WHERE CUSTID= $tCustID");
+  $offer = $result3->fetch_assoc();
+  $offerDesc = $offer['OFFERDESC'];
+  $offerCurr = $offer['CURRENCYOFFERD'];
+  $offerID = $offer['OFFERID'];
+  if ($offer['OFFERACCEPTED'] == 1) {
+    $offerAccepted = "Offer Accepted <button href='confirmswap.php?id=$offerID' class='btn-large waves-effect waves-light white-text green darken-3'/>Confirm Swap</button></span>";
+  }
+  else {
+    $offerAccepted = 0;
+  }
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
@@ -28,28 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     }
 }
-
-if ( $result->num_rows == 0 ) {
-  //ADD Make offer field
-  $offerSet = 0;
-}
-else {
-  //Show Set offer
-  $offerSet = 1;
-  $result3 = $mysqli->query("SELECT * FROM OFFER WHERE CUSTID= $postAccountID");
-  $offer = $result3->fetch_assoc();
-  $offerDesc = $offer['OFFERDESC'];
-  $offerCurr = $offer['CURRENCYOFFERD'];
-  $offerID = $offer['OFFERID']
-  if ($offer['OFFERACCEPTED'] == 1) {
-    $offerAccepted = "Offer Accepted <button href='confirmswap.php?id=$offerID' class='btn-large waves-effect waves-light white-text green darken-3'/>Confirm Swap</button></span>";
-  }
-  else {
-    $offerAccepted = 0;
-  }
-}
-
-
 
 
 ?>
@@ -150,12 +154,12 @@ else {
   <div class="col s12">
     <div class="card yellow darken-2">
       <div class="card-content white-text">
-        <?php if($offerSet == 0){echo "<span class='card-title'>Make a offer</span>";}else{echo "<span class='card-title'>Your offer</span>";}?>
+      <?php if($_SESSION['accountID'] == $listing['ACCOUNTID']){echo "<span class='card-title'>View Offers:<a href='viewlistingoffers.php?id=$listingID'>View</a></span>";} elseif($offerSet == 0){echo "<span class='card-title'>Make a offer</span>";}else{echo "<span class='card-title'>Your offer</span>";}?>
       </div>
     </div>
   </div>
 </div>
-<?php if($offerSet == 0){ ?>
+<?php if ($_SESSION['accountID'] == $listing['ACCOUNTID']){echo "";}elseif($offerSet == 0){ echo"<script>alert($offerSet)</script>"; echo"<script>alert($custID)</script>;" ?>
   <div class="card green white-text darken-3">
     <form role="form" action="listing.php?id=<?=$listingID?>" method="post" class="col s12">
     <div class="row">
@@ -183,7 +187,7 @@ else {
           <span class="card-title">Offer</span>
           <div class="row">
             <p><?= $offerDesc ?></p>
-            <p>Credits Offerd: <?= $offerCurr ?> <?php if ($offerAccepted != 0){$offerAccepted} ?></p>
+            <p>Credits Offerd: <?= $offerCurr ?> <?php if($offerAccepted != 0){$offerAccepted;} ?></p>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ if ( $_SESSION['logged_in'] != 1 ) {
 
 
 
+
 $offerID = $mysqli->escape_string($_GET['id']);
 
 $result = $mysqli->query("SELECT * FROM OFFER WHERE OFFERID= $offerID ") or die($mysqli->error());
@@ -15,7 +16,63 @@ $offer = $result->fetch_assoc();
 
 $listingID = $offer['LISTINGID'];
 $custID = $offer['CUSTID'];
-$accountID = $offer['ACCOUNTID'];
+$offerAccepted = $offer['OFFERACCEPTED'];
+
+$listingAccountAccepted = $offer['OFFERDONELIST'];
+$offerAccountAccepted = $offer['OFFERDONEPOST'];
+
+if ($offerAccountAccepted == 1 and $listingAccountAccepted = 1)
+{
+  $sql = "UPDATE OFFER SET OFFERDONELIST = '1' WHERE OFFER.OFFERID = $offerID ";
+  if ( $mysqli->query($sql) ){
+      header("location: confirmswap.php");
+  }
+  else {
+      $_SESSION['message'] = 'Edit failed!';
+      header("location: error.php");
+  }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    if (isset($_POST['submit'])) {
+
+      if ($_SESSION['accountID'] == $accountID)
+      {
+        $sql = "UPDATE OFFER SET OFFERDONELIST = '1' WHERE OFFER.OFFERID = $offerID ";
+        if ( $mysqli->query($sql) ){
+            header("location: confirmswap.php");
+        }
+        else {
+            $_SESSION['message'] = 'Updateing OFFERDONELIST failed';
+            header("location: error.php");
+        }
+      }
+      else {
+        $sql = "UPDATE OFFER SET OFFERDONEPOST = '1' WHERE OFFER.OFFERID = $offerID ";
+        if ( $mysqli->query($sql) ){
+            header("location: confirmswap.php");
+        }
+        else {
+            $_SESSION['message'] = 'Updateing OFFERDONELIST failed';
+            header("location: error.php");
+        }
+      }
+
+    }
+}
+
+
+if ($offerAccepted = 0){
+  $_SESSION['message'] = "This swap has not been accepted by the listing creator";
+  header("location: error.php");
+}
+
+elseif ($offerAccepted = 2){
+  $_SESSION['message'] = "This swap has been completed";
+  header("location: error.php");
+}
+
 
 $result2 = $mysqli->query("SELECT * FROM Account WHERE ACCOUNTID= $custID ") or die($mysqli->error());
 $offerAccount = $result2->fetch_assoc();
@@ -33,8 +90,22 @@ $listingAccountEmail = $listingAccount['EMAIL'];
 $offerAccountUsername = $listingAccount['USERNAME'];
 $offerAccountEmail = $offerAccount['EMAIL'];
 
-$listingAccountAccepted = $offer['OFFERDONELIST'];
-$offerAccountAccepted = $offer['OFFERDONEPOST'];
+
+
+
+if ($listingAccountAccepted == 1){
+  $displayAcceptedList = "Listing creator has accepted";
+}
+else {
+  $displayAcceptedList = "Listing creator has not accepted";
+}
+
+if ($offerAccountAccepted == 1){
+  $displayAcceptedPost = "Offer creator has accepted";
+}
+else {
+  $displayAcceptedPost = "Offer creator has not accepted";
+}
 
 ?>
 <!DOCTYPE html>
@@ -71,12 +142,16 @@ $offerAccountAccepted = $offer['OFFERDONEPOST'];
             <span class="card-title"><?= $listing['COMPONENTNAME'] ?></span>
             <p><?= $listingAccountUsername ?>`s email: <?= $listingAccountEmail ?></p>
             <p><?= $offerAccountUsername ?>`s email: <?= $offerAccountEmail ?></p>
+            <p><?= $displayAcceptedList ?></p>
+            <p><?= $displayAcceptedPost ?></p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 
 
 <div class="row">

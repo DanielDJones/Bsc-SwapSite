@@ -9,14 +9,13 @@ $custID = $getCUSTID2['CUSTID'];
 
 $offerB= $mysqli->escape_string($_POST['offerB']);
 $offerCred = $mysqli->escape_string($_POST['creditsOfferd']);
-$offerCred = (int)$offerCred;
 
     $sql = "INSERT INTO OFFER (CUSTID, LISTINGID, OFFERDESC, CURRENCYOFFERD) VALUES ($custID,$listingID,'$offerB',$offerCred)";
 
     if ( $mysqli->query($sql) ){
-            header("location: login.php");
+            header("location: listing.php?id=$listingID");
     }
     else {
-        $_SESSION['message'] = 'Registration failed!';
+        $_SESSION['message'] = 'Failed to make an offer!';
         header("location: error.php");
     }
