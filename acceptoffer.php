@@ -10,9 +10,9 @@ $listingID = $offer['LISTINGID'];
 
   $sql = "UPDATE OFFER SET OFFERACCEPTED = '1' WHERE OFFER.OFFERID = $offerID ";
   if ( $mysqli->query($sql) ){
-    $sql = "UPDATE LISTING SET LISTINGACTIVE = '0' WHERE LISTING.LISTINGID = $listingID ";
+    $sql = "UPDATE LISTING SET LISTINGACTIVE = '2' WHERE LISTING.LISTINGID = $listingID ";
     if ( $mysqli->query($sql) ){
-
+        header("location: ongoingswaps.php");
       }
       else {
         $_SESSION['message'] = 'Edit failed!';

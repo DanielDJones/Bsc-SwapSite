@@ -47,9 +47,6 @@ if ($offerAccountAccepted == 1 and $listingAccountAccepted == 1)
   }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-{
-    if (isset($_POST['submit'])) {
 
       if ($_SESSION['accountID'] == $accountID)
       {
@@ -59,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         }
         else {
             $_SESSION['message'] = 'Updateing OFFERDONELIST failed';
-            header("location: error.php");
+            header("location: error.php?id=$offerID");
         }
       }
       else {
@@ -73,8 +70,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         }
       }
 
-    }
-}
 
 
 if ($offerAccepted == 0){
@@ -173,6 +168,7 @@ else {
 
 <div class="row">
   <div class="col s12">
+
     <div class="row center">
       <a href="confirmswap2.php?id=<?=$offerID?>" type="submit" class="btn-large waves-effect waves-light black-text yellow" />Confirm Swap</a>
     </div>

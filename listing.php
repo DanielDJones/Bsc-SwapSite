@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 </div>
 
-
+<?php if($listing['LISTINGACTIVE'] == 1){ ?>
 <div class="row">
   <div class="col s12">
     <div class="card yellow darken-2">
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     </div>
   </div>
 </div>
-<?php if ($_SESSION['accountID'] == $listing['ACCOUNTID']){echo "";}elseif($offerSet == 0){ echo"<script>alert($offerSet)</script>"; echo"<script>alert($custID)</script>;" ?>
+<?php }if ($_SESSION['accountID'] == $listing['ACCOUNTID']){echo "";}elseif($offerSet == 0){ echo"<script>alert($offerSet)</script>"; echo"<script>alert($custID)</script>;" ?>
   <div class="card green white-text darken-3">
     <form role="form" action="listing.php?id=<?=$listingID?>" method="post" class="col s12">
     <div class="row">

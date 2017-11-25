@@ -4,6 +4,9 @@ session_start();
 
 $accountId = $_SESSION['accountID'];
 
+
+//Listings
+
 $activeListQ = "SELECT * FROM LISTING WHERE LISTINGACTIVE = 1 AND ACCOUNTID = $accountId ORDER BY LISTINGCDATE ";
 $activeListR = mysqli_query($mysqli, $activeListQ);
 $inactiveListQ = "SELECT * FROM LISTING WHERE LISTINGACTIVE = 0 AND ACCOUNTID = $accountId ORDER BY LISTINGCDATE ";
@@ -13,11 +16,17 @@ $getCustID = $mysqli->query("SELECT * FROM Cust WHERE ACCOUNTID='$accountId'");
 $getCUSTID2 = $getCustID->fetch_assoc();
 $custID = $getCUSTID2['CUSTID'];
 
+// Offers
 $activeOfferQ = "SELECT * FROM OFFER, LISTING WHERE LISTINGACTIVE = 1 AND CUSTID = $custID ORDER BY LISTINGCDATE ";
 $activeOfferR = mysqli_query($mysqli, $activeOfferQ);
-$inactiveOfferQ = "SELECT * FROM OFFER, LISTING WHERE LISTINGACTIVE = 0 AND CUSTID = $custID ORDER BY LISTINGCDATE ";
+$inactiveOfferQ = "SELECT * FROM OFFER, LISTING WHERE LISTINGACTIVE = 0 AND CUSTID = $custID AND OFFERACCEPTED = 2 ORDER BY LISTINGCDATE ";
 $inactiveOfferR = mysqli_query($mysqli, $inactiveOfferQ);
 
+//Confirm
+$confirmListQ = "SELECT * FROM LISTING WHERE LISTINGACTIVE = 2 AND ACCOUNTID = $accountId ORDER BY LISTINGCDATE ";
+$confirmListR = mysqli_query($mysqli, $confirmListQ);
+$confirmOfferQ = "SELECT * FROM OFFER, LISTING WHERE LISTINGACTIVE = 2 AND CUSTID = $custID ORDER BY LISTINGCDATE ";
+$confirmOfferR = mysqli_query($mysqli, $confirmOfferQ);
  ?>
 
 <!DOCTYPE html>
@@ -44,6 +53,84 @@ $inactiveOfferR = mysqli_query($mysqli, $inactiveOfferQ);
     </div>
   </div>
 </nav>
+
+<?php
+while(TRUE){
+
+  $row = mysqli_fetch_array($confirmListR, MYSQLI_ASSOC);
+  if($row == NULL)
+  {
+    $listingsLeft = 0;
+    break;
+  }
+  $listingTitle = $row['COMPONENTNAME'];
+  $listingDesc = $row['COMPONENTDESC'];
+  $listingTime = $row['LISTINGCDATE'];
+  $listingDesc = substr($listingDesc, 0, 100)."...";
+  $listingID = $row['LISTINGID'];
+  $getOfferIdQ = $mysqli->query("SELECT * FROM OFFER WHERE LISTINGID = $listingID and OFFERACCEPTED = 1 ");
+  $getOfferIdR = $getOfferIdQ->fetch_assoc();
+  $offerID = $getOfferIdR['OFFERID'];
+
+ ?>
+
+<div class="row">
+  <div class="col s12">
+    <div class="card green darken-3 white-text horizontal">
+      <div class="card-image">
+        <img src="http://via.placeholder.com/400x400">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title"><?=$listingTitle ?></span>
+          <p><?=$listingDesc ?></p>
+        </div>
+        <div class="card-action">
+          <a href="confirmswap.php?id=<?=$offerID?>">Confrim</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php } ?>
+
+<?php
+while(TRUE){
+
+  $row = mysqli_fetch_array($confirmOfferR, MYSQLI_ASSOC);
+  if($row == NULL)
+  {
+    $listingsLeft = 0;
+    break;
+  }
+  $listingTitle = $row['COMPONENTNAME'];
+  $listingDesc = $row['COMPONENTDESC'];
+  $listingTime = $row['LISTINGCDATE'];
+  $listingDesc = substr($listingDesc, 0, 100)."...";
+  $listingID = $row['LISTINGID'];
+  $offerID = $row['OFFERID'];
+
+ ?>
+
+<div class="row">
+  <div class="col s12">
+    <div class="card green darken-3 white-text horizontal">
+      <div class="card-image">
+        <img src="http://via.placeholder.com/400x400">
+      </div>
+      <div class="card-stacked">
+        <div class="card-content">
+          <span class="card-title"><?=$listingTitle ?></span>
+          <p><?=$listingDesc ?></p>
+        </div>
+        <div class="card-action">
+          <a href="confirmswap.php?id=<?=$offerID?>">Confrim</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<?php } ?>
 
 <div class="row">
   <div class="col s12">
@@ -192,7 +279,7 @@ while(TRUE){
 <?php
 while(TRUE){
 
-  $row = mysqli_fetch_array($activeOfferR, MYSQLI_ASSOC);
+  $row = mysqli_fetch_array($inactiveOfferR, MYSQLI_ASSOC);
   if($row == NULL)
   {
     $listingsLeft = 0;
@@ -206,7 +293,7 @@ while(TRUE){
 
 <div class="row">
   <div class="col s12">
-    <div class="card yellow darken-3 white-text horizontal">
+    <div class="card green darken-3 white-text horizontal">
       <div class="card-stacked">
         <div class="card-content">
           <span class="card-title">Offer</span>
@@ -214,7 +301,7 @@ while(TRUE){
           <p>Credits Offerd: <?=$creditsOfferd ?></p>
         </div>
         <div class="card-action">
-          <a href="listing.php?id=<?=$listingID?>">View listing: <?=$listingTime ?></a>
+          <a href="listing.php?id=<?=$listingID?>">View listing</a>
         </div>
       </div>
     </div>
