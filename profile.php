@@ -13,6 +13,11 @@ $result = $mysqli->query("SELECT * FROM Account WHERE ACCOUNTID= $accountId");
 $user = $result->fetch_assoc();
 $aboutMe = $user['BIO'];
 
+$query = "SELECT * FROM LISTING WHERE LISTINGACTIVE = 1 AND ACCOUNTID = $accountId ORDER BY LISTINGID ";
+$result = mysqli_query($mysqli, $query);
+
+$listingsLeft = 1;
+
 ?>
 
 <!DOCTYPE html>
@@ -46,13 +51,10 @@ $aboutMe = $user['BIO'];
           <div class="col s12 m4 l2">
             <div class="card green darken-3">
               <div class="card-image">
-                <img src="http://via.placeholder.com/400x400">
+                <img src="userimg/profile/<?=$accountId?>.jpg">
               </div>
 
-              <div class="card-action">
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
+              <div class="card-action white-text">
               </div>
             </div>
           </div>
@@ -61,24 +63,18 @@ $aboutMe = $user['BIO'];
               <div class="col s12">
                 <div class="card yellow darken-2">
                   <div class="card-content white-text">
-                    <span class="card-title"><?= $username ?> <button type="submit" class="btn-large waves-effect waves-light white-text green darken-3" name="register" />Edit Profile</button></span>
+                    <span class="card-title"><?= $username ?> <a href="editProfile.php" class="btn-large waves-effect waves-light white-text green darken-3">Edit Profile</a></span>
                   </div>
                 </div>
               </div>
-              <div class="col s12">
-                <div class="card green darken-3">
-                  <div class="card-content white-text">
-                    <p> User Rateing: Here <a href="#">See Details</a></p>
-                  </div>
-                </div>
-              </div>
+
             </div>
           </div>
 
         </div>
         <div class="row">
           <div class="col s12">
-            <div class="card yellow darken-2">
+            <div class="card green darken-3">
               <div class="card-content white-text">
                 <span class="card-title">About Me</span>
                 <p><?= $aboutMe ?></p>
@@ -98,20 +94,39 @@ $aboutMe = $user['BIO'];
 
         <div class="row">
           <div class="col s12">
-            <div class="card green darken-3 white-text horizontal">
-              <div class="card-image">
-                <img src="http://via.placeholder.com/400x400">
-              </div>
-              <div class="card-stacked">
-                <div class="card-content">
-                  <span class="card-title">Listing Title</span>
-                  <p>I am a very simple card. I am good at containing small bits of information.</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">View listing</a>
+            <?php
+            while($listingsLeft == 1){
+
+              $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+              if($row == NULL)
+              {
+                $listingsLeft = 0;
+                break;
+              }
+              $listingTitle = $row['COMPONENTNAME'];
+              $listingDesc = $row['COMPONENTDESC'];
+              $listingDesc = substr($listingDesc, 0, 100)."...";
+              $listingID = $row['LISTINGID'];
+             ?>
+            <div class="row">
+              <div class="col s12">
+                <div class="card green darken-3 white-text horizontal">
+                  <div class="card-image">
+
+                  </div>
+                  <div class="card-stacked">
+                    <div class="card-content">
+                      <span class="card-title"><?=$listingTitle ?></span>
+                      <p><?=$listingDesc ?></p>
+                    </div>
+                    <div class="card-action">
+                      <a href="listing.php?id=<?=$listingID?>">View listing</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          <?php } ?>
           </div>
         </div>
 

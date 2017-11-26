@@ -3,9 +3,10 @@
 require 'dbconnect.php';
 session_start();
 
-$query = "SELECT * FROM LISTING WHERE LISTINGACTIVE = 1 ORDER BY LISTINGID ";
+$cat = $mysqli->escape_string($_GET['param']);
+echo "<script>alert($cat)</script>";
+$query = "SELECT * FROM LISTING WHERE LISTINGACTIVE = 1 AND category = '$cat' ORDER BY LISTINGID ";
 $result = mysqli_query($mysqli, $query);
-
 $listingsLeft = 1;
 
 
@@ -28,7 +29,7 @@ $listingsLeft = 1;
     <div class="nav-wrapper">
       <a href="index.html" class="brand-logo">Electro Swappers</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="createListing.php">Create Listing</a></li>
+        <li><a href="listings.php">All Listings</a></li>
         <li><a href="profile.php">My Profile</a></li>
         <li><a href="ongoingswaps.php">My Swaps</a></li>
         <li><a href="buycredits.php">Buy Credits</a></li>

@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
               <div class="card-content white-text">
                 <div class="row">
 
- <form role="form" action="createListing.php" method="post" class="col s12">
+ <form role="form" action="createListing.php" method="post" enctype="multipart/form-data" class="col s12">
 
    <div class="row">
      <div class="input-field col s12">
@@ -59,20 +59,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
        <input id="lookingFor" type="text" class="validate" name="lookingFor">
        <label for="lookingFor">Looking For</label>
      </div>
+     <div class="row">
+       <div class="input-field col s12">
+         <input type="file" name="file" class="btn-large waves-effect waves-light black-text yellow">
+       </div>
+     </div>
    </div>
    <div class="row">
      <div class="input-field col s12">
        <select id="cat" name="cat">
-       <option value="" disabled selected>Select Catagory</option>
+       <option value="" selected>Select Catagory</option>
        <optgroup label="Resistors">
-          <option value="Res1">10uF</option>
-          <option value="Res2">20uF</option>
-          <option value="Res3">30uF</option>
+          <option value="R330">330 ohm</option>
+          <option value="R1K">1K ohm</option>
+          <option value="R100K">100k ohm</option>
         </optgroup>
         <optgroup label="Capacitors">
-          <option value="Cap1">10uF</option>
-          <option value="Cap2">20uF</option>
-          <option value="Cap3">30uF</option>
+          <option value="Cap10">10uF</option>
+          <option value="Cap20">20uF</option>
+          <option value="Cap30">30uF</option>
         </optgroup>
       </select>
       <label for="cat">Catagory</label>
