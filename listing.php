@@ -85,13 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   <div class="col s12 m4 l2">
     <div class="card green darken-3">
       <div class="card-image">
-        <img src="http://via.placeholder.com/400x400">
+        <img src="userimg/listing/<?=$listingID?>.jpg">
       </div>
 
       <div class="card-action">
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
+
       </div>
     </div>
   </div>
@@ -158,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     </div>
   </div>
 </div>
-<?php }if ($_SESSION['accountID'] == $listing['ACCOUNTID']){echo "";}elseif($offerSet == 0){ echo"<script>alert($offerSet)</script>"; echo"<script>alert($custID)</script>;" ?>
+<?php }if ($_SESSION['accountID'] == $listing['ACCOUNTID']){echo "";}elseif($offerSet == 0){ ?>
   <div class="card green white-text darken-3">
     <form role="form" action="listing.php?id=<?=$listingID?>" method="post" class="col s12">
     <div class="row">

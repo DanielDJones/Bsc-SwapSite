@@ -76,9 +76,6 @@ while(TRUE){
 <div class="row">
   <div class="col s12">
     <div class="card green darken-3 white-text horizontal">
-      <div class="card-image">
-        <img src="http://via.placeholder.com/400x400">
-      </div>
       <div class="card-stacked">
         <div class="card-content">
           <span class="card-title"><?=$listingTitle ?></span>
@@ -160,7 +157,7 @@ while(TRUE){
   <div class="col s12">
     <div class="card green darken-3 white-text horizontal">
       <div class="card-image">
-        <img src="http://via.placeholder.com/400x400">
+        <img src="userimg/listing/<?=$listingID?>.jpg">
       </div>
       <div class="card-stacked">
         <div class="card-content">
@@ -249,7 +246,7 @@ while(TRUE){
   <div class="col s12">
     <div class="card green darken-3 white-text horizontal">
       <div class="card-image">
-        <img src="http://via.placeholder.com/400x400">
+        <img src="userimg/listing/<?=$listingID?>.jpg">
       </div>
       <div class="card-stacked">Offer
         <div class="card-content">

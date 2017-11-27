@@ -71,7 +71,7 @@ $listingsLeft = 1;
         <div class="col s12">
           <div class="card green darken-3 white-text horizontal">
             <div class="card-image">
-
+              <img src="userimg/listing/<?=$listingID?>.jpg">
             </div>
             <div class="card-stacked">
               <div class="card-content">
@@ -93,17 +93,17 @@ $listingsLeft = 1;
 
 
   <!-- Dropdown Structure -->
-<ul id='resistorDrop' class='dropdown-content'>
-  <li><a href="listings2.php?param=Res330">330 ohm</a></li>
-  <li><a href="listings2.php?param=Res1K">1K ohm</a></li>
-  <li><a href="listings2.php?param=Res100K">100K ohm</a></li>
-</ul>
+  <ul id='resistorDrop' class='dropdown-content'>
+    <li><a href="listings2.php?param=R330">330 ohm</a></li>
+    <li><a href="listings2.php?param=R1K">1K ohm</a></li>
+    <li><a href="listings2.php?param=R100K">100K ohm</a></li>
+  </ul>
 
-<ul id='capacitorDrop' class='dropdown-content'>
-  <li><a href="listings2.php?param=Cap10">10uF</a></li>
-  <li><a href="listings2.php?param=Cap20">20uF</a></li>
-  <li><a href="listings2.php?param=Cap30">30UF</a></li>
-</ul>
+  <ul id='capacitorDrop' class='dropdown-content'>
+    <li><a href="listings2.php?param=Cap10">10uF</a></li>
+    <li><a href="listings2.php?param=Cap20">20uF</a></li>
+    <li><a href="listings2.php?param=Cap30">30UF</a></li>
+  </ul>
 
 
 
