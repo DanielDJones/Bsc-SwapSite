@@ -17,7 +17,7 @@ $listingsLeft = 1;
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="UTF-8">
-    <title>Buy Credits</title>
+    <title>Listings</title>
 </head>
 
 <body>
@@ -31,7 +31,6 @@ $listingsLeft = 1;
         <li><a href="createListing.php">Create Listing</a></li>
         <li><a href="profile.php">My Profile</a></li>
         <li><a href="ongoingswaps.php">My Swaps</a></li>
-        <li><a href="buycredits.php">Buy Credits</a></li>
       </ul>
     </div>
   </div>

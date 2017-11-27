@@ -27,7 +27,7 @@ $listingsLeft = 1;
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <meta charset="UTF-8">
-      <title>Profile</title>
+      <title>MY Profile</title>
     </head>
 
     <body>
@@ -38,9 +38,8 @@ $listingsLeft = 1;
             <a href="index.html" class="brand-logo">Electro Swappers</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li><a href="listings.php">Listings</a></li>
-              <li><a href="profile.php">My Profile</a></li>
+              <li><a href="logout.php">Logout</a></li>
               <li><a href="ongoingswaps.php">My Swaps</a></li>
-              <li><a href="buycredits.php">Buy Credits</a></li>
             </ul>
           </div>
         </div>
@@ -132,15 +131,6 @@ $listingsLeft = 1;
 
       </div>
 
-      <footer class="page-footer green darken-2">
-
-        <div class="footer-copyright">
-          <div class="container">
-          © 2017 Daniel Jones
-          <a class="grey-text text-lighten-4 right" href="#">Back to top</a>
-          </div>
-        </div>
-      </footer>
 
 
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

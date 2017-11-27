@@ -41,7 +41,6 @@ $listingsLeft = 1;
               <li><a href="listings.php">Listings</a></li>
               <li><a href="profile.php">My Profile</a></li>
               <li><a href="ongoingswaps.php">My Swaps</a></li>
-              <li><a href="buycredits.php">Buy Credits</a></li>
             </ul>
           </div>
         </div>
@@ -131,15 +130,7 @@ $listingsLeft = 1;
       </div>
       </div>
 
-      <footer class="page-footer green darken-2">
 
-        <div class="footer-copyright">
-          <div class="container">
-          © 2017 Daniel Jones
-          <a class="grey-text text-lighten-4 right" href="#">Back to top</a>
-          </div>
-        </div>
-      </footer>
 
 
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

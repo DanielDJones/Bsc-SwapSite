@@ -139,7 +139,6 @@ else {
         <li><a href="listings.php">Listings</a></li>
         <li><a href="profile.php">My Profile</a></li>
         <li><a href="ongoingswaps.php">My Swaps</a></li>
-        <li><a href="buycredits.php">Buy Credits</a></li>
       </ul>
     </div>
   </div>
